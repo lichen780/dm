@@ -1,0 +1,23 @@
+name: 网易云300首
+
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '0 1/3/5 * * *'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 更新为中国时间
+      run: |
+        sudo rm -rf /etc/localtime 
+        sudo ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+        date
+    - name: 下载网易云刷歌
+      run: git clone https://github.com/lichen780/dm.git
+   
+    - name: 运行脚本
+      run: python3 dm/wy.py
